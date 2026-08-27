@@ -1,4 +1,6 @@
 import tkinter as tk
+import matplotlib
+matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
 
 x = [3, 4, 5, 6, 7]
@@ -6,7 +8,7 @@ y = [10, 12, 14, 16, 18]
 
 plt.plot(x, y)
 plt.scatter(x, y, color='purple') #Gráfica de puntos
-#plt.bar(x, y, color='lightpink') #Gráfica de barras
+plt.bar(x, y, color='lightpink') #Gráfica de barras
 plt.title("Mi primera Gráfica")
 plt.xlabel("Eje X")
 plt.ylabel("Eje Y")
@@ -28,5 +30,5 @@ entrada.pack(pady=10)
 bot = tk.Button(root, text="Saludar", command=saludar, font=("Arial Rounded MT Bold", 12))
 bot.pack(pady=10)
 
-root.mainloop()
 
+root.mainloop()
