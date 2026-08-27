@@ -16,7 +16,6 @@ List of algorithms implemented.
 
 - Codes:
 - Documents:
-- Images:
 
 ## Conclusions
 
