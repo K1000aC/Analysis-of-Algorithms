@@ -49,21 +49,23 @@ def comparar():
         tiempos_merge.append(medir_tiempo(merge_sort, copy.copy(datos)))
         tiempos_quick.append(medir_tiempo(quick_sort, copy.copy(datos)))
 
-    graficar(tamanios, tiempos_bubble, tiempos_selection, "Fuerza Bruta")
-    graficar(tamanios, tiempos_merge, tiempos_quick, "Divide y Vencerás")
+    graficar(
+        tamanios,
+        tiempos_bubble,
+        tiempos_selection,
+        tiempos_merge,
+        tiempos_quick,
+    )
     mensaje.config(text="Comparación completada.", foreground="green")
 
 
-def graficar(tamanios, tiempos_primero, tiempos_segundo, categoria):
-    nombres = {
-        "Fuerza Bruta": ("Bubble Sort", "Selection Sort"),
-        "Divide y Vencerás": ("Merge Sort", "Quick Sort"),
-    }
-
+def graficar(tamanios, tiempos_bubble, tiempos_selection, tiempos_merge, tiempos_quick):
     plt.figure()
-    plt.plot(tamanios, tiempos_primero, marker="o", label=nombres[categoria][0])
-    plt.plot(tamanios, tiempos_segundo, marker="o", label=nombres[categoria][1])
-    plt.title(f"Comparación: {categoria}")
+    plt.plot(tamanios, tiempos_bubble, marker="o", label="Bubble Sort")
+    plt.plot(tamanios, tiempos_selection, marker="o", label="Selection Sort")
+    plt.plot(tamanios, tiempos_merge, marker="o", label="Merge Sort")
+    plt.plot(tamanios, tiempos_quick, marker="o", label="Quick Sort")
+    plt.title("Comparación de los cuatro algoritmos")
     plt.xlabel("Tamaño de entrada n")
     plt.ylabel("Tiempo de ejecución (s)")
     plt.legend()
