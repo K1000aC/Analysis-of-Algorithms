@@ -17,7 +17,7 @@ plt.show()
 def saludar():
     nombre = entrada.get().strip()
     if not nombre:
-        nombre = "Camila"
+        nombre = "Mundo"
     lbl.config(text=f"Hola Compa, {nombre}!!")
 
 root=tk.Tk()
