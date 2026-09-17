@@ -141,7 +141,7 @@ bot = tk.Button(
 )
 bot.pack(pady=20)
 
-mensaje = tk.Label(root, text="Deja un campo vacío para usar su valor predeterminado.")
+mensaje = tk.Label(root, text="Aceptar y Comparar")
 mensaje.pack(pady=5)
 
 root.mainloop()
