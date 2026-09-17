@@ -6,10 +6,24 @@ import matplotlib.pyplot as plt
 
 import time
 from BubbleSort import bubble_sort
+from Exchange_sort import exchange_sort
+from Gnome_sort import gnome_sort
+from Insertion_sort import insertion_sort
 from MergeSort import merge_sort
 from QuickSort import quick_sort
 from Randomm import generate
 from SelectionSort import selection_sort
+
+
+ALGORITMOS = {
+    "Bubble Sort": bubble_sort,
+    "Selection Sort": selection_sort,
+    "Insertion Sort": insertion_sort,
+    "Exchange Sort": exchange_sort,
+    "Gnome Sort": gnome_sort,
+    "Merge Sort": merge_sort,
+    "Quick Sort": quick_sort,
+}
 
 def medir_tiempo(algoritmo, datos):
     inicio = time.perf_counter()
@@ -20,7 +34,7 @@ def medir_tiempo(algoritmo, datos):
 def obtener_parametros():
     inicio = int(entrada_inicio.get() or 30)
     incremento = int(entrada_incremento.get() or 20)
-    fin = int(entrada_fin.get() or 1000)
+    fin = int(entrada_fin.get() or 100)
 
     if inicio <= 0 or incremento <= 0 or fin < inicio:
         raise ValueError("Usa valores positivos y un fin mayor o igual al inicio.")
@@ -36,36 +50,24 @@ def comparar():
         return
 
     tamanios = []
-    tiempos_bubble = []
-    tiempos_selection = []
-    tiempos_merge = []
-    tiempos_quick = []
+    tiempos = {nombre: [] for nombre in ALGORITMOS}
 
     for n in range(inicio, fin + 1, incremento):
         datos = generate(n, 1, 100)
         tamanios.append(n)
-        tiempos_bubble.append(medir_tiempo(bubble_sort, copy.copy(datos)))
-        tiempos_selection.append(medir_tiempo(selection_sort, copy.copy(datos)))
-        tiempos_merge.append(medir_tiempo(merge_sort, copy.copy(datos)))
-        tiempos_quick.append(medir_tiempo(quick_sort, copy.copy(datos)))
+        for nombre, algoritmo in ALGORITMOS.items():
+            tiempos[nombre].append(medir_tiempo(algoritmo, copy.copy(datos)))
 
-    graficar(
-        tamanios,
-        tiempos_bubble,
-        tiempos_selection,
-        tiempos_merge,
-        tiempos_quick,
-    )
+    graficar(tamanios, tiempos)
     mensaje.config(text="Comparación completada.", foreground="green")
 
 
-def graficar(tamanios, tiempos_bubble, tiempos_selection, tiempos_merge, tiempos_quick):
+def graficar(tamanios, tiempos):
     plt.figure()
-    plt.plot(tamanios, tiempos_bubble, marker="o", label="Bubble Sort")
-    plt.plot(tamanios, tiempos_selection, marker="o", label="Selection Sort")
-    plt.plot(tamanios, tiempos_merge, marker="o", label="Merge Sort")
-    plt.plot(tamanios, tiempos_quick, marker="o", label="Quick Sort")
-    plt.title("Comparación de los cuatro algoritmos")
+    for nombre, resultados in tiempos.items():
+        plt.plot(tamanios, resultados, marker="o", label=nombre)
+
+    plt.title("Comparación de algoritmos de ordenamiento")
     plt.xlabel("Tamaño de entrada n")
     plt.ylabel("Tiempo de ejecución (s)")
     plt.legend()
@@ -143,7 +145,7 @@ bot = tk.Button(
 )
 bot.pack(pady=20)
 
-mensaje = tk.Label(root, text="Aceptar y Comparar")
+mensaje = tk.Label(root, text="Deja un campo vacío para usar sus valores predeterminados.")
 mensaje.pack(pady=5)
 
 root.mainloop()
